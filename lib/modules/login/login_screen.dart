@@ -1,7 +1,10 @@
-// ignore_for_file: avoid_print, unnecessary_string_escapes, dead_code, prefer_const_constructors
+// ignore_for_file: avoid_print, unnecessary_string_escapes, dead_code, prefer_const_constructors, missing_required_param
 
+import 'package:conditional_builder/conditional_builder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping/modules/login/cubit/loginCubit.dart';
 import 'package:shopping/modules/login/cubit/states.dart';
 import 'package:shopping/modules/on_boarding/on_boarding_screen.dart';
@@ -18,13 +21,27 @@ class LoginScreen extends StatelessWidget {
       create: (BuildContext context) => ShopLoginCubit(),
 
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
+        listener: (context, state) {
+          if(state is SuccessLogin){
+            if(state.shopLoginModel.status == true)
+              {
+                boast(message:state.shopLoginModel.message, bgColor: Colors.green, gravity: ToastGravity.BOTTOM);
+                print(state.shopLoginModel.message);
+                print(state.shopLoginModel.data!.token);
+              }else{
+                print(state.shopLoginModel.message);
+                boast(message:state.shopLoginModel.message, gravity: ToastGravity.BOTTOM);
+              }
+          }
+        },
 
-        listener: (context, status) {},
-        builder: (context, status) {
+        builder: (context, state) {
           var cubit = ShopLoginCubit.get(context);
+
           return Scaffold(
             body: Padding(
               padding: const EdgeInsets.all(20),
+
               child: SingleChildScrollView(
                 child: Form(
                   key: cubit.formKey,
@@ -70,20 +87,21 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 35,
                       ),
-                      defaultButton(
-                          name: "Login",
-                          radius: 10.0,
-                          function: () {
-                            if (cubit.formKey.currentState!.validate()) {
-                              print(cubit.email.text);
-                              print(cubit.password.text);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => OnBoardingScreen(),
-                                  ));
-                            }
-                          }),
+                      ConditionalBuilder(
+                        condition: state is! ShopLoginLoadingState,
+                        fallback: (context) => Center(child: CircularProgressIndicator(),),
+                        builder: (context) => defaultButton(
+                            name: "Login",
+                            radius: 10.0,
+                            function: () {
+                              if (cubit.formKey.currentState!.validate()) {
+                                cubit.userLogin(
+                                    email: cubit.email.text,
+                                    password: cubit.password.text
+                                );
+                              }
+                            }),
+                      ),
                       const SizedBox(
                         height: 35,
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void navigatTo(context, widget) => Navigator.push(
     context,
@@ -33,7 +34,7 @@ Widget defaultButton({
         },
         child: Text(
           name,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontFamily: 'serif',
             fontWeight: FontWeight.bold,
@@ -58,18 +59,20 @@ Widget defaultTextFormField({
   Function? suffixPressed,
   Function? validate,
   Function? ontap,
+  var onSubmit,
   var onchange,
   var contexti = null,
 }) =>
     TextFormField(
+        onFieldSubmitted: onSubmit,
         controller: controller,
         keyboardType: textInputType,
         obscureText: isPassword,
         decoration: InputDecoration(
-          // hintText: "Email Adress",
+          // hintText: "Email Address",
 
           labelText: text,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           prefixIcon: prefixicon,
           suffixIcon: suffixicon == null
               ? null
@@ -82,9 +85,9 @@ Widget defaultTextFormField({
         ),
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Field Is Emapty';
+            return 'Field Is Empty';
           } else {
-            if (text == 'Email Adress') {
+            if (text == 'Email Address') {
               bool emailValid = RegExp(
                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                   .hasMatch(value);
@@ -102,3 +105,25 @@ Widget defaultTextFormField({
                 ontap();
               });
 
+Future<bool?> boast(
+{
+  required message,
+  gravity = ToastGravity.CENTER,
+  textColor = Colors.white,
+  bgColor = Colors.red,
+  toastLength = Toast.LENGTH_SHORT,
+  fontSize = 16.0,
+  timeInSecForIosWeb = 1,
+
+}
+    ){
+  return Fluttertoast.showToast(
+      msg: message,
+      toastLength: toastLength,
+      gravity: gravity,
+      timeInSecForIosWeb: timeInSecForIosWeb,
+      backgroundColor: bgColor,
+      textColor: textColor,
+      fontSize: fontSize
+  );
+}
