@@ -39,7 +39,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                navigatAndFinish(context, LoginScreen());
+                navigateAndFinish(context, LoginScreen());
               },
               child: Text('SKIP',style: TextStyle(fontWeight: FontWeight.bold),))
         ],
@@ -89,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(
                   onPressed: () {
                     if (isLast) {
-                      navigatAndFinish(context, LoginScreen());
+                      navigateAndFinish(context, LoginScreen());
                     } else {
                       boardController.nextPage(
                         duration: Duration(
