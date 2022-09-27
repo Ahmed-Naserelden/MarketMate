@@ -5,11 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopping/layout/home_layout/shop_layout.dart';
 import 'package:shopping/modules/login/cubit/loginCubit.dart';
 import 'package:shopping/modules/login/cubit/states.dart';
 import 'package:shopping/modules/on_boarding/on_boarding_screen.dart';
 import 'package:shopping/modules/register/register.dart';
 import 'package:shopping/shared/components/components.dart';
+import 'package:shopping/shared/network/local/cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -28,6 +30,10 @@ class LoginScreen extends StatelessWidget {
                 boast(message:state.shopLoginModel.message, bgColor: Colors.green, gravity: ToastGravity.BOTTOM);
                 print(state.shopLoginModel.message);
                 print(state.shopLoginModel.data!.token);
+                CachHelper.saveData(key: 'token', value: state.shopLoginModel.data!.token).then((value){
+                      navigateAndFinish(context, ShopLayout());
+                    }
+                );
               }else{
                 print(state.shopLoginModel.message);
                 boast(message:state.shopLoginModel.message, gravity: ToastGravity.BOTTOM);

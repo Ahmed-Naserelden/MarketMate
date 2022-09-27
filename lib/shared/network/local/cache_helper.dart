@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CachHelper {
@@ -7,24 +6,25 @@ class CachHelper {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static Future<bool> pushData({required key, required value}) async {
-    return await sharedPreferences.setBool(key, value);
+  static dynamic getData({required key}) {
+    return sharedPreferences.get(key);
   }
 
-  static bool? getData({required key}) {
-    return sharedPreferences.getBool(key);
-  }
-
-  static Future<bool> saveData({required String key, required dynamic value}){
+  static Future<bool> saveData({required String key, required dynamic value}) async{
     if(value is int){
-      return sharedPreferences.setInt(key, value);
+      return await sharedPreferences.setInt(key, value);
     }
     else if(value is String){
-      return sharedPreferences.setString(key, value);
+      return await sharedPreferences.setString(key, value);
     }
     else if(value is bool){
-      return sharedPreferences.setBool(key, value);
+      return await sharedPreferences.setBool(key, value);
     }
-    return sharedPreferences.setDouble(key, value);
+    return await sharedPreferences.setDouble(key, value);
   }
+
+  static Future<bool> removeKey({required String key}) async {
+    return await sharedPreferences.remove(key);
+  }
+
 }

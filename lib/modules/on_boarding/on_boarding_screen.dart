@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shopping/models/BoardingModel.dart';
 import 'package:shopping/modules/login/login_screen.dart';
 import 'package:shopping/shared/components/components.dart';
+import 'package:shopping/shared/network/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 var boardController = PageController();
@@ -39,7 +40,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                navigateAndFinish(context, LoginScreen());
+                submit();
               },
               child: Text('SKIP',style: TextStyle(fontWeight: FontWeight.bold),))
         ],
@@ -54,7 +55,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 controller: boardController,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) =>
-                    boardingbuilder(boarding[index]),
+                    boardingBuilder(boarding[index]),
                 itemCount: boarding.length,
                 onPageChanged: (index) {
                   if (index == boarding.length - 1) {
@@ -89,7 +90,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(
                   onPressed: () {
                     if (isLast) {
-                      navigateAndFinish(context, LoginScreen());
+                      submit();
                     } else {
                       boardController.nextPage(
                         duration: Duration(
@@ -109,7 +110,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  Widget boardingbuilder(BoardingModel model) => Column(
+  Widget boardingBuilder(BoardingModel model) => Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -134,4 +135,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
         ],
       );
+
+  void submit(){
+    CachHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if(value) {
+        navigateAndFinish(context, LoginScreen());
+      }
+    });
+  }
+
 }
