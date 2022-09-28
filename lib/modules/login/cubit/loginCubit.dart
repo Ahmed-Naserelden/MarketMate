@@ -61,8 +61,4 @@ class ShopLoginCubit extends Cubit<ShopLoginStates>{
            emit(FailureLogin());
          });
   }
-
-
-
-
 }

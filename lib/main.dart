@@ -19,10 +19,6 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CachHelper.init();
-
-  bool onBoarding = CachHelper.getData(key: 'onBoarding')??false;
-
-
   runApp(const MyApp());
 }
 
@@ -37,16 +33,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers:[
-        BlocProvider(create: (BuildContext context) => ShopCubit()..start(),),
+        BlocProvider(
+          create: (BuildContext context) =>
+          ShopCubit()
+          ..start()..getHomeData(),),
       ],
       //create: (BuildContext context) => ShopLoginCubit(),
       child: BlocConsumer<ShopCubit, ShopStatus>(
         listener: (context, state) {},
         builder: (context, state) {
-          var cubit = ShopCubit.get(context);
 
+          var cubit = ShopCubit.get(context);
           bool onBoarding = cubit.onBoarding;
           String token = cubit.token;
+
 
 
           return MaterialApp(
@@ -72,12 +72,3 @@ class MyApp extends StatelessWidget {
   }
 
 }
-/*
-return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.light,
-      home: const RegisterScreen(),
-      );
- */
