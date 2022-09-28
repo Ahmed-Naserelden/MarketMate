@@ -17,19 +17,25 @@ class ShopLayout extends StatelessWidget {
       builder: (context, state){
         return Scaffold(
           appBar: AppBar(
+            title: const Text('Sella',style: TextStyle(),),
           ),
           body: Center(
             child: TextButton(
               child: const Text('Log out'),
               onPressed: (){
-                CachHelper.removeKey(key: 'token').then((value) {
-                  navigateAndFinish(context, const LoginScreen());
-                });
-
-          },),),
+                logoutFunction(context);
+                },
+            ),
+          ),
         );
       },
     );
 
+  }
+
+  void logoutFunction(context){
+    CachHelper.removeKey(key: 'token').then((value) {
+      navigateAndFinish(context, const LoginScreen());
+    });
   }
 }

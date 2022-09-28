@@ -11,6 +11,7 @@ class ShopCubit extends Cubit<ShopStatus>{
 
   late bool isDark, onBoarding;
   late String token;
+  int currentIndex = 0;
 
   void start(){
 
@@ -20,6 +21,10 @@ class ShopCubit extends Cubit<ShopStatus>{
 
   }
 
+  void changeIndex(int index){
+    currentIndex = index;
+    emit(state);
+  }
 
 
 
