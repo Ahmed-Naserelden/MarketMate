@@ -29,6 +29,14 @@ class ShopLayout extends StatelessWidget {
                     Icons.search,
                 ),
               ),
+              IconButton(
+                onPressed: (){
+                  logoutFunction(context);
+                },
+                icon: const Icon(
+                  Icons.logout_rounded,
+                ),
+              ),
             ],
           ),
           body: cubit.bottomScreens[cubit.currentIndex],

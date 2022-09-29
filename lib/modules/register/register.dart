@@ -16,8 +16,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool to = true, _isObscure = true, _isObscureRe = true;
   var formKey = GlobalKey<FormState>();
   var email = TextEditingController();
-  var fname = TextEditingController();
-  var lname = TextEditingController();
+  var fName = TextEditingController();
+  var lName = TextEditingController();
   var password = TextEditingController();
   var rePassword = TextEditingController();
   @override
@@ -53,21 +53,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   text: 'First Name',
                   textInputType: TextInputType.text,
                   prefixicon: const Icon(Icons.person),
-                  controller: fname,
+                  controller: fName,
                 ),
                 SizedBox(height: 15.0,),
                 defaultTextFormField(
                   text: 'Last Name',
                   textInputType: TextInputType.text,
                   prefixicon: const Icon(Icons.person),
-                  controller: lname,
+                  controller: lName,
                 ),
                 
                 const SizedBox(
                   height: 35,
                 ),
                 defaultTextFormField(
-                  text: 'Email Adress',
+                  text: 'Email Address',
                   textInputType: TextInputType.emailAddress,
                   prefixicon: const Icon(Icons.email),
                   controller: email,
@@ -96,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 
                 defaultTextFormField(
-                  text: 'Repeate Password',
+                  text: 'Repeat Password',
                   textInputType: TextInputType.visiblePassword,
                   prefixicon: const Icon(Icons.lock),
                   controller: rePassword,
@@ -139,7 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        navigatTo(context, LoginScreen());
+                        navigateAndFinish(context, LoginScreen());
                       },
                       child: const Text(
                         "Login",
