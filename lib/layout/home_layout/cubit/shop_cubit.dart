@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
+import 'package:shopping/models/categories_model.dart';
 import 'package:shopping/models/home_model.dart';
 import 'package:shopping/modules/categories/categories_screen.dart';
 import 'package:shopping/modules/favorites/favorites_screen.dart';
@@ -79,6 +80,18 @@ class ShopCubit extends Cubit<ShopStatus>{
     });
   }
 
+  CategoriesModel? categoriesModel;
+  void getCategoriesData(){
+    emit(ShopLoadingCategoriesStatus());
+    DioHelper.getDate(url: CATEGORIES,).then((value) {
+        categoriesModel = CategoriesModel.fromJson(value.data);
+        print('categoriesModel!.status => ${categoriesModel!.status}');
+        emit(ShopSuccessCategoriesStatus());
+    }).catchError((error){
+        print(error.toString());
+        emit(ShopErrorCategoriesStatus());
+    });
 
+  }
 
 }

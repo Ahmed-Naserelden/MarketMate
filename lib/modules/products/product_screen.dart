@@ -1,12 +1,14 @@
-// ignore_for_file: missing_required_param, prefer_const_constructors
+// ignore_for_file: missing_required_param, prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_cubit.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
+import 'package:shopping/models/categories_model.dart';
 import 'package:shopping/models/home_model.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -17,8 +19,8 @@ class ProductScreen extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopStatus>(
         builder: (context, state){
           return ConditionalBuilder(
-            condition: ShopCubit.get(context).homeDataModel != null,
-            builder: (context) => productBuilder(ShopCubit.get(context).homeDataModel!),
+            condition: ShopCubit.get(context).homeDataModel != null && ShopCubit.get(context).categoriesModel != null,
+            builder: (context) => productBuilder(ShopCubit.get(context).homeDataModel!, context),
             fallback: (context) => const Center(child: CircularProgressIndicator()),
           );
         },
@@ -26,60 +28,88 @@ class ProductScreen extends StatelessWidget {
 
         }
     );
-
   }
 
-  Widget productBuilder(HomeDataModel homeDataModel){
+  Widget productBuilder(HomeDataModel homeDataModel, context){
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Padding(
         padding: EdgeInsets.all(10.0),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Column(
-            children: [
-              CarouselSlider(
-                items: homeDataModel.data!.banners.map((e) =>
-                    Image(image: NetworkImage(e.image.toString()), width: double.infinity,fit: BoxFit.cover),
-                ).toList(),
-                options: CarouselOptions(
-                  viewportFraction: 1,
-                  height: 250.0,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                  reverse: false,
-                  autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlayAnimationDuration: Duration(seconds: 1),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  scrollDirection: Axis.horizontal,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CarouselSlider(
+              items: homeDataModel.data!.banners.map((e) =>
+                  Image(image: NetworkImage(e.image.toString()), width: double.infinity,fit: BoxFit.cover),
+              ).toList(),
+              options: CarouselOptions(
+                viewportFraction: 1,
+                height: 250.0,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+                reverse: false,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(seconds: 1),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                scrollDirection: Axis.horizontal,
 
-                ),
               ),
-              SizedBox(
-                height: 10.0,
+            ),
+            SizedBox(height: 10.0,),
+            Text(
+              'Categories',
+              style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.black,
+                fontWeight: FontWeight.w800,
               ),
-              Container(
-                color: Colors.grey[200],
-                child: GridView.count(
+            ),
+            Container(
+              height: 100.0,
+              child: ListView.separated(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                  itemBuilder: (context , index) {
+                    return categoryItem(ShopCubit.get(context).categoriesModel!.categoriesData!.data[index]);
+                  },
+                  separatorBuilder: (context , index){
+                    return SizedBox(width: 10);
+                  },
+                  itemCount: ShopCubit.get(context).categoriesModel!.categoriesData!.data.length,
+              ),
+            ),
+            SizedBox(height: 20.0,),
+            Text(
+              'New Products',
+              style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.black,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Container(
+              color: Colors.grey[200],
+              child: GridView.count(
 
-                  mainAxisSpacing: 1.0,
-                  crossAxisSpacing: 3,
-                  childAspectRatio: 1 / 1.53,
+                mainAxisSpacing: 1.0,
+                crossAxisSpacing: 3,
+                childAspectRatio: 1 / 1.53,
 
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  children: List.generate(
-                      homeDataModel.data!.products.length,
-                          (index) {
-                            return buildGridItem(homeDataModel.data!.products[index]);
-                          }),
-                ),
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                children: List.generate(
+                    homeDataModel.data!.products.length,
+                        (index) {
+                          return buildGridItem(homeDataModel.data!.products[index]);
+                        }),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -160,5 +190,38 @@ class ProductScreen extends StatelessWidget {
 
       ],
     );
+  }
+
+  Widget categoryItem(Data data){
+    return  Container(
+      width: 100.0,
+      height: 100.0,
+      child: Stack(
+        alignment: AlignmentDirectional.bottomCenter,
+        children: [
+          Image(
+            image: NetworkImage('${data.image}'),
+            width: 100.0,
+            height: 100.0,
+            fit: BoxFit.cover,
+          ),
+          Container(
+            width: double.infinity,
+            child: Text(
+              '${data.name}',
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            color: Colors.black.withOpacity(0.8),
+          ),
+        ],
+      ),
+    );
+
   }
 }
