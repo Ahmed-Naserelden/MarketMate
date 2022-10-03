@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, list_remove_unrelated_type
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
 import 'package:shopping/models/categories_model.dart';
 import 'package:shopping/models/change_favorite_model.dart';
+import 'package:shopping/models/favorites_model.dart';
 import 'package:shopping/models/home_model.dart';
 import 'package:shopping/modules/categories/categories_screen.dart';
 import 'package:shopping/modules/favorites/favorites_screen.dart';
@@ -33,7 +34,8 @@ class ShopCubit extends Cubit<ShopStatus>{
     FavoritesScreen(),
     SettingsScreen(),
   ];
-  List<BottomNavigationBarItem> bottomNavigationBarItems =  const [
+
+  List<BottomNavigationBarItem> bottomNavigationBarItems = const [
     BottomNavigationBarItem(
         icon:  Icon(Icons.home),
         label: 'Home'
@@ -97,26 +99,32 @@ class ShopCubit extends Cubit<ShopStatus>{
     });
   }
 
-  void getFavoriteProduct(int productId){
+
+  FavoriteModel? favoriteProducts;
+  void getFavoriteProduct(){
+    print("\n\n\n\n");
     DioHelper.getDate(
         url: FAVORITE,
-        query: {
-          'product_id' : productId,
-        },
         token: token
     ).then((value){
-      emit(ChangeFavoriteProductSuccessState());
-      print(value.data);
+      // print(value.data);
+      favoriteProducts = FavoriteModel.fromJson(value.data);
+
+      emit(GetFavoriteProductSuccessState());
     }).catchError((err){
-      emit(ChangeFavoriteProductErrorState());
+      emit(GetFavoriteProductErrorState());
       print(err.toString());
     });
+    print("\n\n\n\n");
+    emit(GetFavoriteProductSuccessState());
   }
-
 
   ChangeFavoriteModel? changeFavoriteModel;
   void changeFavoriteProduct(int productId){
-
+    isInFavorite[productId] == true
+        ? isInFavorite[productId] = false
+        : isInFavorite[productId] = true;
+    emit(ChangeFavoriteProductState());
 
     DioHelper.postDate(
       url: FAVORITE,
@@ -126,18 +134,25 @@ class ShopCubit extends Cubit<ShopStatus>{
       token: token,
     ).then((value) {
       changeFavoriteModel = ChangeFavoriteModel.fromJson(value.data);
-      if(isInFavorite[productId] == true) {
-        isInFavorite[productId] = false;
-      }else{
-        isInFavorite[productId] = true;
+
+      if(changeFavoriteModel!.status == false) {
+        isInFavorite[productId] == true
+            ? isInFavorite[productId] = false
+            : isInFavorite[productId] = true;
       }
-      // print(value.data);
-      emit(ChangeFavoriteProductSuccessState());
+
+      favoriteProducts!.data!.data!.data.removeWhere((element) => element.product!.id == productId);
+      emit(ChangeFavoriteProductSuccessState(changeFavoriteModel!));
     }).catchError((err){
+      isInFavorite[productId] == true
+          ? isInFavorite[productId] = false
+          : isInFavorite[productId] = true;
       print(err.toString());
       emit(ChangeFavoriteProductErrorState());
     });
 
   }
+
+
 
 }

@@ -6,10 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_cubit.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
 import 'package:shopping/models/categories_model.dart';
 import 'package:shopping/models/home_model.dart';
+import 'package:shopping/shared/components/components.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({Key? key}) : super(key: key);
@@ -25,7 +27,9 @@ class ProductScreen extends StatelessWidget {
           );
         },
         listener: (context, state){
-
+          if (state is ChangeFavoriteProductSuccessState && state.model.status == false){
+            boast(message: state.model.message, gravity: ToastGravity.BOTTOM,);
+          }
         }
     );
   }
