@@ -10,10 +10,14 @@ class ShopLoadingDataSuccessStatus extends ShopStatus{}
 
 class ShopLoadingDataErrorStatus extends ShopStatus{}
 
-
 class ShopLoadingCategoriesStatus extends ShopStatus{}
-
 
 class ShopSuccessCategoriesStatus extends ShopStatus{}
 
 class ShopErrorCategoriesStatus extends ShopStatus{}
+
+class ChangeFavoriteProductState extends ShopStatus{}
+
+class ChangeFavoriteProductSuccessState extends ShopStatus{}
+
+class ChangeFavoriteProductErrorState extends ShopStatus{}

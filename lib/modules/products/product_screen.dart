@@ -1,4 +1,4 @@
-// ignore_for_file: missing_required_param, prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: missing_required_param, prefer_const_constructors, sized_box_for_whitespace, avoid_print
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder/conditional_builder.dart';
@@ -105,7 +105,7 @@ class ProductScreen extends StatelessWidget {
                 children: List.generate(
                     homeDataModel.data!.products.length,
                         (index) {
-                          return buildGridItem(homeDataModel.data!.products[index]);
+                          return buildGridItem(context, homeDataModel.data!.products[index]);
                         }),
               ),
             ),
@@ -115,7 +115,7 @@ class ProductScreen extends StatelessWidget {
     );
   }
 
-  Widget buildGridItem(ProductModel product){
+  Widget buildGridItem(context, ProductModel product){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -181,9 +181,10 @@ class ProductScreen extends StatelessWidget {
             Spacer(),
             IconButton(
               onPressed: () {
-
+                print(product.id);
+                ShopCubit.get(context).changeFavoriteProduct(product.id!);
               },
-              icon: true ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_outline, ),
+              icon: ShopCubit.get(context).isInFavorite[product.id] == true ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_outline, ),
             ),
           ],
         ),
