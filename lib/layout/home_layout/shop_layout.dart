@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_cubit.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
+import 'package:shopping/modules/cart/Cart.dart';
 import 'package:shopping/modules/login/login_screen.dart';
 import 'package:shopping/modules/search/search_screen.dart';
 import 'package:shopping/shared/components/components.dart';
@@ -27,6 +28,14 @@ class ShopLayout extends StatelessWidget {
                 },
                 icon: const Icon(
                     Icons.search,
+                ),
+              ),
+              IconButton(
+                onPressed: (){
+                  navigatTo(context, const CartScreen());
+                },
+                icon: const Icon(
+                  Icons.shopping_cart,
                 ),
               ),
               IconButton(

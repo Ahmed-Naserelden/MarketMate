@@ -141,7 +141,12 @@ class ShopCubit extends Cubit<ShopStatus>{
             : isInFavorite[productId] = true;
       }
 
-      favoriteProducts!.data!.data!.data.removeWhere((element) => element.product!.id == productId);
+      if(isInFavorite[productId] == true){
+        getFavoriteProduct();
+      }else {
+        favoriteProducts!.data!.data!.data.removeWhere((element) =>
+        element.product!.id == productId);
+      }
       emit(ChangeFavoriteProductSuccessState(changeFavoriteModel!));
     }).catchError((err){
       isInFavorite[productId] == true
@@ -152,7 +157,5 @@ class ShopCubit extends Cubit<ShopStatus>{
     });
 
   }
-
-
 
 }
