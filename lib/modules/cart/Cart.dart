@@ -14,11 +14,14 @@ class CartScreen extends StatelessWidget {
         builder: (context, state){
           return ConditionalBuilder(
               condition: true,
-              builder: (context) => ListView.separated(
-                  itemBuilder: (context, index) => cartItems(),
-                  separatorBuilder: (context, index) => Container(height: 1, color: Colors.grey,),
-                  itemCount: 10,
+              builder: (context) => Scaffold(
+                appBar: AppBar(),
+                body: ListView.separated(
+                    itemBuilder: (context, index) => cartItems(),
+                    separatorBuilder: (context, index) => Container(height: 1, color: Colors.grey,),
+                    itemCount: 10,
             ),
+              ),
           );
         },
         listener: (context, state){}

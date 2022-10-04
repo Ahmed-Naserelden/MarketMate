@@ -11,6 +11,7 @@ import 'package:shopping/shared/bloc_observer.dart';
 import 'package:shopping/shared/network/local/cache_helper.dart';
 import 'package:shopping/shared/styles/themes.dart';
 
+import 'shared/components/constants.dart';
 import 'shared/network/remote/dio_helper.dart';
 
 void main() async {
@@ -33,8 +34,7 @@ class MyApp extends StatelessWidget {
       providers:[
         BlocProvider(
           create: (BuildContext context) =>
-          ShopCubit()
-          ..start()..getHomeData()..getCategoriesData()..getFavoriteProduct(),),
+          ShopCubit()..start(),),
       ],
       //create: (BuildContext context) => ShopLoginCubit(),
       child: BlocConsumer<ShopCubit, ShopStatus>(
@@ -43,10 +43,6 @@ class MyApp extends StatelessWidget {
 
           var cubit = ShopCubit.get(context);
           bool onBoarding = cubit.onBoarding;
-          String token = cubit.token;
-
-
-
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: lightTheme,

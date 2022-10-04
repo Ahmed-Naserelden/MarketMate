@@ -5,12 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopping/layout/home_layout/cubit/shop_cubit.dart';
 import 'package:shopping/layout/home_layout/shop_layout.dart';
 import 'package:shopping/modules/login/cubit/loginCubit.dart';
 import 'package:shopping/modules/login/cubit/states.dart';
 import 'package:shopping/modules/on_boarding/on_boarding_screen.dart';
 import 'package:shopping/modules/register/register.dart';
 import 'package:shopping/shared/components/components.dart';
+import 'package:shopping/shared/components/constants.dart';
 import 'package:shopping/shared/network/local/cache_helper.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -27,13 +29,15 @@ class LoginScreen extends StatelessWidget {
           if(state is SuccessLogin){
             if(state.shopLoginModel.status == true)
               {
+                token = state.shopLoginModel.data!.token;
                 boast(message:state.shopLoginModel.message, bgColor: Colors.green, gravity: ToastGravity.BOTTOM);
-                print(state.shopLoginModel.message);
-                print(state.shopLoginModel.data!.token);
+                print("Login Token ${state.shopLoginModel.data!.token}");
+                ShopCubit.get(context).afterLogin();
                 CachHelper.saveData(key: 'token', value: state.shopLoginModel.data!.token).then((value){
-                      navigateAndFinish(context, ShopLayout());
-                    }
-                );
+                  navigateAndFinish(context, ShopLayout());
+                }).catchError((err){
+                  print(err.toString());
+                });
               }else{
                 print(state.shopLoginModel.message);
                 boast(message:state.shopLoginModel.message, gravity: ToastGravity.BOTTOM);
@@ -72,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                       defaultTextFormField(
                         text: 'Email Address',
                         textInputType: TextInputType.emailAddress,
-                        prefixicon: Icon(Icons.email),
+                        prefixIcon: Icon(Icons.email),
                         controller: cubit.email,
                       ),
                       const SizedBox(
@@ -81,10 +85,10 @@ class LoginScreen extends StatelessWidget {
                       defaultTextFormField(
                         text: 'Password',
                         textInputType: TextInputType.visiblePassword,
-                        prefixicon: Icon(Icons.lock),
+                        prefixIcon: Icon(Icons.lock),
                         controller: cubit.password,
                         isPassword: cubit.isObscure,
-                        suffixicon:
+                        isSuffixIcon:
                         cubit.isObscure ? Icons.visibility_off : Icons.visibility,
                         suffixPressed: () {
                           cubit.showPassword();
@@ -123,7 +127,6 @@ class LoginScreen extends StatelessWidget {
                           TextButton(
                             onPressed: () {
                               navigateAndFinish(context, RegisterScreen());
-
                             },
                             child: const Text(
                               "Register Now",

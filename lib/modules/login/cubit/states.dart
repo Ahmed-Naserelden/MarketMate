@@ -3,6 +3,7 @@ import 'package:shopping/models/login_model.dart';
 abstract class ShopLoginStates{}
 
 class InitialState extends ShopLoginStates{}
+
 class ShowPasswordState extends ShopLoginStates{}
 
 class SuccessLogin extends ShopLoginStates{

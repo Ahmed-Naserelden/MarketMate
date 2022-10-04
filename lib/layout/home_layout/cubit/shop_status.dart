@@ -1,4 +1,7 @@
+import 'package:shopping/models/login_model.dart';
+
 import '../../../models/change_favorite_model.dart';
+import '../../../models/profile_model.dart';
 
 abstract class ShopStatus{}
 
@@ -33,3 +36,19 @@ class ChangeFavoriteProductErrorState extends ShopStatus{
   // final ChangeFavoriteModel model;
   // ChangeFavoriteProductErrorState(this.model);
 }
+
+class LoadingGetProfileState extends ShopStatus{}
+
+class GetProfileSuccessState extends ShopStatus{}
+
+class GetProfileErrorState extends ShopStatus{}
+
+class RegisterSuccessState extends ShopStatus{}
+
+class RegisterErrorState extends ShopStatus{}
+
+
+
+
+
+

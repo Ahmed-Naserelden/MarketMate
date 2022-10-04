@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_cubit.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
+import 'package:shopping/models/profile_model.dart';
 import 'package:shopping/modules/cart/Cart.dart';
 import 'package:shopping/modules/login/login_screen.dart';
 import 'package:shopping/modules/search/search_screen.dart';
 import 'package:shopping/shared/components/components.dart';
+import 'package:shopping/shared/components/constants.dart';
 import 'package:shopping/shared/network/local/cache_helper.dart';
 
 class ShopLayout extends StatelessWidget {
@@ -35,7 +37,7 @@ class ShopLayout extends StatelessWidget {
                   navigatTo(context, const CartScreen());
                 },
                 icon: const Icon(
-                  Icons.shopping_cart,
+                  Icons.shopping_cart_outlined,
                 ),
               ),
               IconButton(
@@ -73,7 +75,6 @@ class ShopLayout extends StatelessWidget {
               cubit.changeBottom(index);
             },
             currentIndex: cubit.currentIndex,
-
           ),
         );
       },
@@ -81,6 +82,7 @@ class ShopLayout extends StatelessWidget {
   }
 
   void logoutFunction(context){
+    token="";
     CachHelper.removeKey(key: 'token').then((value) {
       navigateAndFinish(context, const LoginScreen());
     });

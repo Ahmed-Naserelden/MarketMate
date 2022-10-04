@@ -54,9 +54,9 @@ Widget defaultTextFormField({
   required TextEditingController controller,
   required String text,
   required TextInputType textInputType,
-  required var prefixicon,
-  var suffixicon = null,
-  var isSuffixicon = false,
+  required var prefixIcon,
+  var suffixIcon = null,
+  var isSuffixIcon = false,
   bool isPassword = false,
   Function? suffixPressed,
   Function? validate,
@@ -75,11 +75,11 @@ Widget defaultTextFormField({
 
           labelText: text,
           border: const OutlineInputBorder(),
-          prefixIcon: prefixicon,
-          suffixIcon: suffixicon == null
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon == null
               ? null
               : IconButton(
-                  icon: Icon(suffixicon),
+                  icon: Icon(suffixIcon),
                   onPressed: () {
                     suffixPressed!();
                   },
