@@ -2,6 +2,7 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_cubit.dart';
+import 'package:shopping/shared/components/constants.dart';
 
 import '../../layout/home_layout/cubit/shop_status.dart';
 import '../../models/cart_model.dart';
@@ -35,29 +36,31 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Text('Total Price : ${cubit.cart!.data!.total}',style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold),),
-                  Center(
-                    child: Text.rich(
-                      TextSpan(
-                        text: 'Total Price : ',
-                        style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold, fontSize: 22.0),
-                        children: [
+            body: ConditionalBuilder(
+              condition: cubit.online,
+              builder: (context) => Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Text('Total Price : ${cubit.cart!.data!.total}',style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold),),
+                    Center(
+                      child: Text.rich(
                           TextSpan(
-                            text: '${cubit.cart!.data!.total}',
-                            style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold,),
-                          ),
-                        ],
-                      )
+                            text: 'Total Price : ',
+                            style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold, fontSize: 22.0),
+                            children: [
+                              TextSpan(
+                                text: '${cubit.cart!.data!.total}',
+                                style: const TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold,),
+                              ),
+                            ],
+                          )
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 30.0,),
-                  Expanded(
-                    child: ListView.separated(
+                    const SizedBox(height: 30.0,),
+                    Expanded(
+                      child: ListView.separated(
                         itemBuilder: (context, index) => ListItem(context, cubit.cart!.data!.cartItems[index]),
                         separatorBuilder: (context, index) => Column(
                           children: [
@@ -67,9 +70,11 @@ class CartScreen extends StatelessWidget {
                         ),
                         itemCount: cubit.cart!.data!.cartItems.length,
                       ),
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
+              fallback: (context) => offline(),
             ),
           );
         },

@@ -1,3 +1,4 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,11 +65,11 @@ class ShopLayout extends StatelessWidget {
             ),
           ),
 
-
-
-
-
-          body: cubit.bottomScreens[cubit.currentIndex],
+          body: ConditionalBuilder(
+            condition: cubit.online,
+            builder: (context) => cubit.bottomScreens[cubit.currentIndex],
+            fallback: (context) => offline(),
+          ),
           bottomNavigationBar: BottomNavigationBar(
 
             items:  const [

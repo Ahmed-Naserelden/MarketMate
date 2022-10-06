@@ -33,6 +33,7 @@ class ShopCubit extends Cubit<ShopStatus> {
 
   late bool isDark, onBoarding;
   int currentIndex = 0;
+  bool online = false;
 
   List<Widget> bottomScreens = const [
     ProductScreen(),
@@ -85,6 +86,7 @@ class ShopCubit extends Cubit<ShopStatus> {
     getProfile();
     getCart();
     getFavoriteProduct();
+    isConnect();
   }
 
   void changeBottom(int index) {
@@ -308,6 +310,16 @@ class ShopCubit extends Cubit<ShopStatus> {
     }).catchError((err) {
       print(err.toString());
       emit(UpdateProductCartErrorState());
+    });
+  }
+
+
+  void isConnect(){
+    checkConnection().then((value){
+      if(value == true)
+      {
+        online = true;
+      }
     });
   }
 }
