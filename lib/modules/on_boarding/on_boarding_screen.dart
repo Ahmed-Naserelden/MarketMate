@@ -19,18 +19,18 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<BoardingModel> boarding = [
     BoardingModel(
-        title: 'Page 1',
-        body: 'body 1',
+        title: 'House Ware',
+        body: 'Every Thing Exist!',
         image:
-            'images/cute-phoenix-character-with-fire-feathers_107791-9379.jpg'),
+            'images/A1.jpg'),
     BoardingModel(
-        title: 'Page 2',
-        body: 'body 2',
-        image: 'images/mint-green-floral-wreath-border_1305-4761.jpg'),
+        title: 'House Ware',
+        body: 'Online Ok!',
+        image: 'images/A2.jpg'),
     BoardingModel(
-        title: 'Page 3',
-        body: 'body 3',
-        image: 'images/png-cartoon-globe-vintage-sticker_53876-127373.jpg'),
+        title: 'House Ware',
+        body: 'Cash Back!',
+        image: 'images/A3.jpg'),
   ];
   bool isLast = false;
   @override
@@ -114,21 +114,22 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Image(image: AssetImage(model.image)),
+
+            child: Image(image: AssetImage(model.image), fit: BoxFit.fill,),
           ),
           const SizedBox(
             height: 20.0,
           ),
           Text(
             model.title,
-            style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.deepOrange),
           ),
           const SizedBox(
             height: 20.0,
           ),
           Text(
             model.body,
-            style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.deepOrange),
           ),
           const SizedBox(
             height: 100.0,
