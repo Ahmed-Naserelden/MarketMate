@@ -22,7 +22,20 @@ class ShopLayout extends StatelessWidget {
         var cubit = ShopCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Sella',style: TextStyle(),),
+            leading: IconButton(
+              onPressed: (){
+                logoutFunction(context);
+              },
+              icon: const Icon(
+                Icons.logout_sharp,
+                color: Colors.deepOrange,
+              ),
+            ),
+            title: Center(
+              child: const Text('House Ware',style: TextStyle(
+                color: Colors.deepOrange,
+              ),),
+            ),
             actions: [
               IconButton(
                 onPressed: (){
@@ -30,6 +43,7 @@ class ShopLayout extends StatelessWidget {
                 },
                 icon: const Icon(
                     Icons.search,
+                    color: Colors.deepOrange,
                 ),
               ),
               IconButton(
@@ -38,16 +52,10 @@ class ShopLayout extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.shopping_cart_outlined,
+                  color: Colors.deepOrange,
                 ),
               ),
-              IconButton(
-                onPressed: (){
-                  logoutFunction(context);
-                },
-                icon: const Icon(
-                  Icons.logout_rounded,
-                ),
-              ),
+
             ],
           ),
           body: cubit.bottomScreens[cubit.currentIndex],

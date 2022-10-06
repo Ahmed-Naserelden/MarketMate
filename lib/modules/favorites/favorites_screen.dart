@@ -34,7 +34,6 @@ class FavoritesScreen extends StatelessWidget {
     );
   }
 
-
   Widget ListItem(Product favoriteProduct, context){
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -50,7 +49,7 @@ class FavoritesScreen extends StatelessWidget {
                   image: NetworkImage('${favoriteProduct.image}'),
                   width: 100.0,
                   height: 100.0,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
                 if(favoriteProduct.discount != 0)
                 Container(
@@ -60,9 +59,7 @@ class FavoritesScreen extends StatelessWidget {
                   child: const Text('DISCOUNT', style: TextStyle(fontSize: 10.0, color: Colors.white, fontWeight: FontWeight.bold),),
                 ),
               ],),
-
             const SizedBox(width: 10.0,),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

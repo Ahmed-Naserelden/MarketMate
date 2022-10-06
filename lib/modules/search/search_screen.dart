@@ -168,7 +168,7 @@ class SearchScreen extends StatelessWidget {
                   image: NetworkImage('${product.image}'),
                   width: 100.0,
                   height: 100.0,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ],),
 

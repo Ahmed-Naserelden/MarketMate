@@ -75,6 +75,7 @@ class ShopCubit extends Cubit<ShopStatus> {
     getHomeData();
     getCategoriesData();
     getProfile();
+    getCart();
     getFavoriteProduct();
   }
 
@@ -255,7 +256,6 @@ class ShopCubit extends Cubit<ShopStatus> {
   }
 
   CartModel? cart;
-
   void getCart() {
     emit(GetCartLoadingState());
     DioHelper.getDate(
@@ -263,6 +263,7 @@ class ShopCubit extends Cubit<ShopStatus> {
       token: token,
     ).then((value) {
       cart = CartModel.fromJson(value.data);
+      print(value.data);
       emit(GetCartSuccessState());
     }).catchError((err) {
       print(err.toString());
@@ -278,6 +279,7 @@ class ShopCubit extends Cubit<ShopStatus> {
         data: {
           "product_id": productId,
         }).then((value) {
+      getCart();
       emit(AddRemoveProductCartSuccessState());
     }).catchError((err) {
       print(err.toString());

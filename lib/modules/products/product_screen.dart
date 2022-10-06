@@ -64,8 +64,8 @@ class ProductScreen extends StatelessWidget {
             Text(
               'Categories',
               style: TextStyle(
-                fontSize: 24.0,
-                color: Colors.black,
+                fontSize: 18.0,
+                color: Colors.deepOrange,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -84,12 +84,14 @@ class ProductScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.0,),
-            Text(
-              'New Products',
-              style: TextStyle(
-                fontSize: 24.0,
-                color: Colors.black,
-                fontWeight: FontWeight.w800,
+            Center(
+              child: Text(
+                'New Products',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.deepOrange,
+                  // fontWeight: FontWeight.w800,
+                ),
               ),
             ),
             SizedBox(
@@ -188,7 +190,7 @@ class ProductScreen extends StatelessWidget {
               // constraints: BoxConstraints(),
               onPressed: () {
                 print(product.id);
-
+                ShopCubit.get(context).addRemoveProductToCart(product.id!);
               },
               icon:  Icon(Icons.add_circle_outlined, color: Colors.deepOrange, size: 30.0,),
             ),
