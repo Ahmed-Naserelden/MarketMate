@@ -9,11 +9,13 @@ import 'package:shopping/models/change_favorite_model.dart';
 import 'package:shopping/models/favorites_model.dart';
 import 'package:shopping/models/home_model.dart';
 import 'package:shopping/models/login_model.dart';
+import 'package:shopping/modules/cart/CartScreen.dart';
 import 'package:shopping/modules/categories/categories_screen.dart';
 import 'package:shopping/modules/favorites/favorites_screen.dart';
 import 'package:shopping/modules/login/cubit/loginCubit.dart';
 
 import 'package:shopping/modules/products/product_screen.dart';
+import 'package:shopping/modules/search/search_screen.dart';
 import 'package:shopping/modules/settings/settings_screen.dart';
 import 'package:shopping/shared/components/components.dart';
 import 'package:shopping/shared/components/constants.dart';
@@ -37,7 +39,13 @@ class ShopCubit extends Cubit<ShopStatus> {
     CategoriesScreen(),
     FavoritesScreen(),
     SettingsScreen(),
+    // SearchScreen(),
+    // CartScreen(),
   ];
+
+  Widget showScreen(int index){
+    return bottomScreens[index];
+  }
 
   List<BottomNavigationBarItem> bottomNavigationBarItems = const [
     BottomNavigationBarItem(

@@ -21,7 +21,25 @@ class SearchScreen extends StatelessWidget {
         builder: (context, state){
           var cubit = ShopCubit.get(context);
           return Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              backgroundColor: Colors.deepOrange,
+              title: const Center(
+                  child: Text(
+                  'Search',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2.0,
+                    fontSize: 25.0,
+                  ),
+                ),
+              ),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(10),
+                ),
+              ),
+            ),
             body: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(

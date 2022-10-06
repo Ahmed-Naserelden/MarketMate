@@ -22,7 +22,9 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
 
 Widget defaultButton({
   double width = double.infinity,
-  Color backgroundColor = const Color.fromARGB(255, 64, 101, 131),
+  // Color backgroundColor = const Color.fromARGB(255, 64, 101, 131),
+  Color backgroundColor =  Colors.deepOrange,
+
   double radius = 0.0,
   required String name,
   required Function function,

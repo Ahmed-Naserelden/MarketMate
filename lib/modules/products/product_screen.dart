@@ -124,6 +124,7 @@ class ProductScreen extends StatelessWidget {
   Widget buildGridItem(context, ProductModel product){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+
       children: [
         Stack(
           alignment: AlignmentDirectional.bottomStart,

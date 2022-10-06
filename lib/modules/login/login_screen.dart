@@ -66,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 55, 89, 117),
+                          color: Colors.deepOrange,
                           fontFamily: 'serif',
                         ),
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_cubit.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
@@ -45,7 +46,51 @@ class MyApp extends StatelessWidget {
           bool onBoarding = cubit.onBoarding;
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: lightTheme,
+            theme: ThemeData(
+              // fontFamily: 'Jannah',
+              primarySwatch: Colors.deepOrange,
+              scaffoldBackgroundColor: Colors.white,
+              appBarTheme: const AppBarTheme(
+                titleSpacing: 20.0,
+                backwardsCompatibility: false, // to me able to edit
+
+                iconTheme: IconThemeData(color: Colors.black),
+
+                titleTextStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+
+                backgroundColor: Colors.white,
+                elevation: 0.0,
+                systemOverlayStyle:  SystemUiOverlayStyle(
+                  // this related with the above appbar that located in wifi and battery icons that is status bar
+
+                  statusBarColor: Color.fromARGB(30, 200,71,71),
+                  statusBarIconBrightness: Brightness.light,
+                ),
+              ),
+
+              floatingActionButtonTheme: const FloatingActionButtonThemeData(
+                backgroundColor: Colors.deepOrange,
+              ),
+
+              bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                  type: BottomNavigationBarType.fixed,
+                  selectedItemColor: Colors.deepOrange,
+                  elevation: 20.0
+              ),
+
+              textTheme: const TextTheme(
+                bodyText1: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+
+            ),
             darkTheme: darkTheme,
             themeMode: ThemeMode.light,
             home: startWithWidget(onBoarding, token),
