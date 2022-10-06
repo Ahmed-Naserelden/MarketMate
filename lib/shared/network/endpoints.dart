@@ -9,6 +9,7 @@ const SEARCH = 'products/search';
 const CART = 'carts';
 const PROFILE = 'profile';
 const REGISTER = 'register';
+const UPDATE = 'update-profile';
 
 
 

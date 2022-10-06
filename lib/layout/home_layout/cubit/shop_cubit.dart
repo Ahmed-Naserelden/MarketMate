@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
+import 'package:shopping/models/cart_model.dart';
 import 'package:shopping/models/categories_model.dart';
 import 'package:shopping/models/change_favorite_model.dart';
 import 'package:shopping/models/favorites_model.dart';
@@ -20,6 +21,7 @@ import 'package:shopping/shared/network/local/cache_helper.dart';
 import 'package:shopping/shared/network/remote/dio_helper.dart';
 
 import '../../../models/profile_model.dart';
+import '../../../models/search_result_model.dart';
 import '../../../shared/network/endpoints.dart';
 
 class ShopCubit extends Cubit<ShopStatus> {
@@ -66,16 +68,16 @@ class ShopCubit extends Cubit<ShopStatus> {
     }
 
 
-
     // print(onBoarding);
   }
 
-  void afterLogin(){
+  void afterLogin() {
     getHomeData();
     getCategoriesData();
     getProfile();
     getFavoriteProduct();
   }
+
   void changeBottom(int index) {
     currentIndex = index;
     emit(ChangeBottomNavStatus());
@@ -114,7 +116,6 @@ class ShopCubit extends Cubit<ShopStatus> {
       emit(ShopErrorCategoriesStatus());
     });
   }
-
 
   FavoriteModel? favoriteProducts;
 
@@ -212,4 +213,92 @@ class ShopCubit extends Cubit<ShopStatus> {
       emit(RegisterErrorState());
     });
   }
+
+  void updateProfile(String name, String email, String phone) {
+    emit(UpDataLoadingState());
+    DioHelper.putDate(
+      url: UPDATE,
+      token: token,
+      data: {
+        "name": name,
+        "email": email,
+        "phone": phone,
+      },
+    ).then((value) {
+      emit(UpDataSuccessState());
+    }).catchError((err) {
+      print(err.toString());
+      emit(UpDateErrorState());
+    });
+  }
+
+
+  SearchResultModel? searchModel;
+
+  void search(String text) {
+    emit(SearchLoadingState());
+    if (text.isNotEmpty) {
+      DioHelper.postDate(
+        url: SEARCH,
+        data: {
+          "text": text,
+        },
+        token: token,
+      ).then((value) {
+        searchModel = SearchResultModel.fromJson(value.data);
+        emit(SearchSuccessState());
+      }).catchError((err) {
+        print(err.toString());
+        emit(SearchErrorState());
+      });
+    }
+  }
+
+  CartModel? cart;
+
+  void getCart() {
+    emit(GetCartLoadingState());
+    DioHelper.getDate(
+      url: CART,
+      token: token,
+    ).then((value) {
+      cart = CartModel.fromJson(value.data);
+      emit(GetCartSuccessState());
+    }).catchError((err) {
+      print(err.toString());
+      emit(GetCartErrorState());
+    });
+  }
+
+  void addRemoveProductToCart(int productId) {
+    emit(AddRemoveProductCartLoadingState());
+    DioHelper.postDate(
+        url: CART,
+        token: token,
+        data: {
+          "product_id": productId,
+        }).then((value) {
+      emit(AddRemoveProductCartSuccessState());
+    }).catchError((err) {
+      print(err.toString());
+      emit(AddRemoveProductCartErrorState());
+    });
+  }
+
+  // api not responce
+  void UpdateCart(int quantity) {
+    emit(UpdateProductCartLoadingState());
+    DioHelper.postDate(
+        url: CART,
+        token: token,
+        data: {
+          "quantity": quantity,
+        }).then((value) {
+      emit(UpdateProductCartSuccessState());
+    }).catchError((err) {
+      print(err.toString());
+      emit(UpdateProductCartErrorState());
+    });
+  }
 }
+

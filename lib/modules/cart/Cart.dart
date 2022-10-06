@@ -18,7 +18,7 @@ class CartScreen extends StatelessWidget {
                 appBar: AppBar(),
                 body: ListView.separated(
                     itemBuilder: (context, index) => cartItems(),
-                    separatorBuilder: (context, index) => Container(height: 1, color: Colors.grey,),
+                    separatorBuilder: (context, index) => Container(height: 1, color: Colors.white,),
                     itemCount: 10,
             ),
               ),

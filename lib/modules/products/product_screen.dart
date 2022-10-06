@@ -184,12 +184,26 @@ class ProductScreen extends StatelessWidget {
             ),
             Spacer(),
             IconButton(
+              padding: EdgeInsets.zero,
+              // constraints: BoxConstraints(),
+              onPressed: () {
+                print(product.id);
+
+              },
+              icon:  Icon(Icons.add_circle_outlined, color: Colors.deepOrange, size: 30.0,),
+            ),
+
+            IconButton(
+              padding: EdgeInsets.zero,
+              constraints: BoxConstraints(),
               onPressed: () {
                 print(product.id);
                 ShopCubit.get(context).changeFavoriteProduct(product.id!);
               },
-              icon: ShopCubit.get(context).isInFavorite[product.id] == true ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_outline, ),
+              icon: ShopCubit.get(context).isInFavorite[product.id] == true ? Icon(Icons.favorite, color: Colors.red,size: 25.0,) : Icon(Icons.favorite_outline, size: 25.0,),
             ),
+            SizedBox(width: 10.0,),
+
           ],
         ),
 

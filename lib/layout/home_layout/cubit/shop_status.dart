@@ -47,8 +47,37 @@ class RegisterSuccessState extends ShopStatus{}
 
 class RegisterErrorState extends ShopStatus{}
 
+class UpDataLoadingState extends ShopStatus{}
+
+class UpDataSuccessState extends ShopStatus{}
+
+class UpDateErrorState extends ShopStatus{}
 
 
+class SearchLoadingState extends ShopStatus{}
+
+class SearchSuccessState extends ShopStatus{}
+
+class SearchErrorState extends ShopStatus{}
 
 
+class GetCartLoadingState extends ShopStatus{}
+
+class GetCartSuccessState extends ShopStatus{}
+
+class GetCartErrorState extends ShopStatus{}
+
+
+class AddRemoveProductCartLoadingState extends ShopStatus{}
+
+class AddRemoveProductCartSuccessState extends ShopStatus{}
+
+class AddRemoveProductCartErrorState extends ShopStatus{}
+
+
+class UpdateProductCartLoadingState extends ShopStatus{}
+
+class UpdateProductCartSuccessState extends ShopStatus{}
+
+class UpdateProductCartErrorState extends ShopStatus{}
 
