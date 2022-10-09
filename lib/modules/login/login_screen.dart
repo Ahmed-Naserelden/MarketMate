@@ -78,6 +78,13 @@ class LoginScreen extends StatelessWidget {
                         textInputType: TextInputType.emailAddress,
                         prefixIcon: Icon(Icons.email),
                         controller: cubit.email,
+                        validate: (text){
+                          if(text.isEmpty){
+
+                            return 'field must not empty';
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 35,
@@ -92,6 +99,13 @@ class LoginScreen extends StatelessWidget {
                         cubit.isObscure ? Icons.visibility_off : Icons.visibility,
                         suffixPressed: () {
                           cubit.showPassword();
+                        },
+                        validate: (text){
+                          if(text.isEmpty){
+
+                            return 'field must not empty';
+                          }
+                          return null;
                         },
                       ),
                       const SizedBox(

@@ -43,6 +43,16 @@ class SettingsScreen extends StatelessWidget {
                         if(state is UpDataLoadingState)
                         LinearProgressIndicator(color: Colors.blue[50],backgroundColor: Colors.blueAccent,),
                         SizedBox(height: 15.0,),
+                        CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Image(
+
+                            image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/1200px-User_icon-cp.svg.png'),
+
+                          ),
+                          radius: 60.0,
+                        ),
+                        SizedBox(height: 50.0,),
                         defaultTextFormField(
                             textInputType: TextInputType.name,
                             prefixIcon: Icon(Icons.person),
@@ -90,32 +100,35 @@ class SettingsScreen extends StatelessWidget {
                         ),
 
                         SizedBox(
-                          height: 50.0,
+                          height: 80.0,
                         ),
                         defaultButton(
-                          name: 'Update',
-                          function: (){
-                            if(formKey.currentState!.validate()) {
-                              ShopCubit.get(context).profileModel!.data!.name = nameController.text;
-                              ShopCubit.get(context).profileModel!.data!.email = emailController.text;
-                              ShopCubit.get(context).profileModel!.data!.phone = phoneController.text;
-                              ShopCubit.get(context).updateProfile(
-                                  nameController.text,
-                                  emailController.text,
-                                  phoneController.text
-                              );
-                            }
-                          },
-                        ),
+
+                            name: 'Update',
+                            radius: 10.0,
+                            function: (){
+                              if(formKey.currentState!.validate()) {
+                                ShopCubit.get(context).profileModel!.data!.name = nameController.text;
+                                ShopCubit.get(context).profileModel!.data!.email = emailController.text;
+                                ShopCubit.get(context).profileModel!.data!.phone = phoneController.text;
+                                ShopCubit.get(context).updateProfile(
+                                    nameController.text,
+                                    emailController.text,
+                                    phoneController.text
+                                );
+                              }
+                            },
+                          ),
+
                         SizedBox(
                           height: 30.0,
                         ),
-                        defaultButton(
-                          name: 'Logout',
-                          function: (){
-                            logoutFunction(context);
-                          },
-                        ),
+                        // defaultButton(
+                        //   name: 'Logout',
+                        //   function: (){
+                        //     logoutFunction(context);
+                        //   },
+                        // ),
 
 
 

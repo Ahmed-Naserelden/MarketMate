@@ -38,7 +38,10 @@ class CartScreen extends StatelessWidget {
             ),
             body: ConditionalBuilder(
               condition: cubit.online,
-              builder: (context) => Padding(
+              builder: (context) => ConditionalBuilder(
+                condition: cubit.cart!.data!.cartItems.isNotEmpty,
+                fallback: (context) => dataEmpty("Cart Is Empty !"),
+                builder: (context) => Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,6 +76,7 @@ class CartScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
               ),
               fallback: (context) => offline(),
             ),

@@ -1,10 +1,12 @@
 // ignore_for_file: non_constant_identifier_names, sized_box_for_whitespace, prefer_const_constructors
 
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_cubit.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
 import 'package:shopping/models/favorites_model.dart';
+import 'package:shopping/shared/components/constants.dart';
 
 
 class FavoritesScreen extends StatelessWidget {
@@ -14,20 +16,27 @@ class FavoritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStatus>(
         builder: (context, state){
-          return ListView.separated(
-            physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index){
-                // return Container();
-                return ListItem(ShopCubit.get(context).favoriteProducts!.data!.data!.data[index].product!, context);
+          var cubit = ShopCubit.get(context);
+          return ConditionalBuilder(
+            condition: cubit.favoriteProducts!.data!.data!.data.isNotEmpty,
+            fallback: (context) => dataEmpty('No Favorite Products !'),
+            builder: (context){
+              return ListView.separated(
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (context, index){
+                  // return Container();
+                  return ListItem(cubit.favoriteProducts!.data!.data!.data[index].product!, context);
 
-              },
-              separatorBuilder: (context, index){
-                return Container(
-                  height: 1.0,
-                  color: Colors.grey,
-                );
-              },
-              itemCount: ShopCubit.get(context).favoriteProducts!.data!.data!.data.length,
+                },
+                separatorBuilder: (context, index){
+                  return Container(
+                    height: 1.0,
+                    color: Colors.grey,
+                  );
+                },
+                itemCount: ShopCubit.get(context).favoriteProducts!.data!.data!.data.length,
+              );
+            },
           );
         },
         listener: (context, state){}
@@ -99,6 +108,13 @@ class FavoritesScreen extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
+                      IconButton(
+                        onPressed: (){
+                          // ShopCubit.get(context).changeFavoriteProduct(favoriteProduct.id!);
+                          ShopCubit.get(context).addRemoveProductToCart(favoriteProduct.id!);
+                        },
+                        icon: const Icon(Icons.add_circle, color: Colors.red,),
+                      ),
                       IconButton(
                         onPressed: (){
                           ShopCubit.get(context).changeFavoriteProduct(favoriteProduct.id!);

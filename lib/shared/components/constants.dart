@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shopping/models/BoardingModel.dart';
 
 void printFullText(String text){
   final pattern = RegExp('.{1,800}');
@@ -42,6 +43,34 @@ Widget offline(){
           ),
         ),
       ],
+    ),
+  );
+}
+
+
+Widget dataEmpty(String text){
+  return Center(
+    child: Padding(
+      padding: const EdgeInsets.all(45.0),
+      child: Container(
+
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(width: 2.0, color: Colors.black26),
+        ),
+        height: 200.0,
+        width: 500.0,
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 22.0,
+              color: Colors.black12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
     ),
   );
 }

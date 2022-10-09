@@ -62,6 +62,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.text,
                         prefixIcon: const Icon(Icons.person),
                         controller: fName,
+                        validate: (text){
+                          if(text.isEmpty){
+
+                            return 'field must not empty';
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(height: 15.0,),
                       defaultTextFormField(
@@ -69,6 +76,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.text,
                         prefixIcon: const Icon(Icons.phone),
                         controller: phone,
+                        validate: (text){
+                          if(text.isEmpty){
+
+                            return 'field must not empty';
+                          }
+                          return null;
+                        },
                       ),
 
                       const SizedBox(
@@ -79,6 +93,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         textInputType: TextInputType.emailAddress,
                         prefixIcon: const Icon(Icons.email),
                         controller: email,
+                        validate: (text){
+                          if(text.isEmpty){
+
+                            return 'field must not empty';
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 35,
@@ -107,6 +128,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         prefixIcon: const Icon(Icons.lock),
                         controller: rePassword,
                         isPassword: _isObscureRe,
+                        validate: (text){
+                          if(text != password.text){
+
+                            return 'Passwords must match';
+                          }
+                          return null;
+                        },
                         suffixIcon:
                         _isObscureRe ? Icons.visibility_off : Icons.visibility,
                         suffixPressed: () {
@@ -167,3 +195,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   }
 }
+
+
+/*
+
+
+
+*/

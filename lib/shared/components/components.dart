@@ -61,7 +61,7 @@ Widget defaultTextFormField({
   var isSuffixIcon = false,
   bool isPassword = false,
   Function? suffixPressed,
-  Function? validate,
+  var validate,
   Function? ontap,
   var onSubmit,
   var onchange,
@@ -87,21 +87,7 @@ Widget defaultTextFormField({
                   },
                 ),
         ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Field Is Empty';
-          } else {
-            if (text == 'Email Address') {
-              bool emailValid = RegExp(
-                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                  .hasMatch(value);
-              if (!emailValid) {
-                return '$value not valid email';
-              }
-            }
-          }
-          return null;
-        },
+        validator: validate,
         onChanged: onchange,
         onTap: ontap == null
             ? null
