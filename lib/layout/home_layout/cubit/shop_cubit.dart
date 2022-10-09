@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shopping/layout/home_layout/cubit/shop_status.dart';
 import 'package:shopping/models/cart_model.dart';
 import 'package:shopping/models/categories_model.dart';
@@ -216,7 +217,7 @@ class ShopCubit extends Cubit<ShopStatus> {
     }).then((value) {
       registerModel = ShopLoginModel.fromJson(value.data);
       // if(registerModel!.status == false){
-      boast(message: registerModel!.message);
+      boast(message: registerModel!.message, bgColor: Colors.green,gravity: ToastGravity.BOTTOM,);
       // }
       emit(RegisterSuccessState());
     }).catchError((err) {

@@ -110,6 +110,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         prefixIcon: const Icon(Icons.lock),
                         controller: password,
                         isPassword: _isObscure,
+                        validate: (String text){
+                          if(text.length < 8){
+                            return 'passwords size less than 8';
+                          }
+                          return null;
+                        },
                         suffixIcon:
                         _isObscure ? Icons.visibility_off : Icons.visibility,
                         suffixPressed: () {
@@ -128,10 +134,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         prefixIcon: const Icon(Icons.lock),
                         controller: rePassword,
                         isPassword: _isObscureRe,
-                        validate: (text){
+                        validate: (String text){
+                          if(text.length < 8){
+                            return 'passwords size less than 8';
+                          }
                           if(text != password.text){
-
-                            return 'Passwords must match';
+                            return 'passwords must match';
                           }
                           return null;
                         },
